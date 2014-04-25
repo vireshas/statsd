@@ -57,6 +57,9 @@ var post_stats = function graphite_post_stats(statString) {
           l.log(connectionException);
         }
       });
+      graphite.on('error', function(err){
+          l.log("ERROR CONNECTING TO CARBON. " + err)
+      });
       graphite.on('connect', function() {
         var ts = Math.round(new Date().getTime() / 1000);
         var ts_suffix = ' ' + ts + "\n";
