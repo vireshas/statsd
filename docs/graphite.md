@@ -15,12 +15,12 @@ To define retention and downsampling which match your needs, edit Graphite's con
 
     [stats]
     pattern = ^stats.*
-    retentions = 10s:6h,1min:7d,10min:5y
+    retentions = 10s:6h,1min:6d,10min:1800d
 
 This translates to: for all metrics starting with 'stats' (i.e. all metrics sent by statsd), capture:
 
 * 6 hours of 10 second data (what we consider "near-realtime")
-* 1 week of 1 minute data
+* 6 days of 1 minute data
 * 5 years of 10 minute data
 
 These settings have been a good tradeoff so far between size-of-file (database files are fixed size) and data we care about. Each "stats" database file is about 3.2 megs with these retentions.
@@ -30,7 +30,7 @@ Graphite stores each metric in its own database file, and the retentions take ef
 
 #### Correlation with statsd's flush interval:
 
-In the case of the above example, what would happen if you flush from statsd any faster then every 10 seconds? in that case, multiple values for the same metric may reach Graphite at any given 10-second timespan, and only the last value would take hold and be persisted - so your data would immediately be partially lost. 
+In the case of the above example, what would happen if you flush from statsd any faster than every 10 seconds? in that case, multiple values for the same metric may reach Graphite at any given 10-second timespan, and only the last value would take hold and be persisted - so your data would immediately be partially lost. 
 
 To fix that, simply ensure your flush interval is at least as long as the highest-resolution retention. However, a long interval may cause other unfortunate mishaps, so keep reading - it pays to understand what's really going on.
 
@@ -58,7 +58,7 @@ Let's see now how to configure downsampling in Graphite's conf/storage-aggregati
     aggregationMethod = min
 
     [max]
-    pattern = \.upper$
+    pattern = \.upper(_\d+)?$
     xFilesFactor = 0.1
     aggregationMethod = max
 

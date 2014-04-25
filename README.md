@@ -53,7 +53,7 @@ The basic line protocol expects metrics to be sent via UDP in the format:
 So the simplest way to send in metrics from your command line if you have
 StatsD running on localhost would be:
 
-    echo "foo:1|c" | nc -u 127.0.0.1 8125
+    echo "foo:1|c" | nc -u -w0 127.0.0.1 8125
 
 More Specific Topics
 --------
@@ -96,7 +96,7 @@ Meta
 
 
 
-[graphite]: http://graphite.wikidot.com
+[graphite]: http://graphite.readthedocs.org/
 [etsy]: http://www.etsy.com
 [blog post]: http://codeascraft.etsy.com/2011/02/15/measure-anything-measure-everything/
 [node]: http://nodejs.org
@@ -111,5 +111,5 @@ Meta
 [docs_backend_interface]: https://github.com/etsy/statsd/blob/master/docs/backend_interface.md
 [docs_namespacing]: https://github.com/etsy/statsd/blob/master/docs/namespacing.md
 [docs_cluster_proxy]: https://github.com/etsy/statsd/blob/master/docs/cluster_proxy.md
-[travis-ci_status_img]: https://travis-ci.org/etsy/statsd.png?branch=backends-as-packages
+[travis-ci_status_img]: https://travis-ci.org/etsy/statsd.svg?branch=master
 [travis-ci_statsd]: https://travis-ci.org/etsy/statsd
